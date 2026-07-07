@@ -108,8 +108,15 @@ CONFIG_PER_STA_FC = n
 CONFIG_PREALLOC_RX_SKB ?= n
 CONFIG_PREALLOC_TXQ ?= y
 CONFIG_USE_WIRELESS_EXT = y
+# NOTE: Forced DPD calibration is disabled by default.
+# On many AIC8800DC/DW clone dongles the calibration firmware never starts
+# ("start app fail: -110" / "dpd calib fail: -110" in dmesg), which aborts
+# probe and leaves you with no wlan interface. DPD only fine-tunes TX power
+# linearity; with FORCE_DPD_CALIB off the driver falls back to the
+# non-calibrating aicwf_misc_ram_init_8800dc() path and initialises normally.
+# If your specific unit's calibration works and you want it, set this to y.
 CONFIG_DPD = y
-CONFIG_FORCE_DPD_CALIB = y
+CONFIG_FORCE_DPD_CALIB = n
 CONFIG_LOFT_CALIB = n
 CONFIG_GKI = n
 CONFIG_SCHED_SCAN = n
